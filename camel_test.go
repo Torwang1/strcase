@@ -25,6 +25,7 @@
 package strcase
 
 import (
+	"fmt"
 	"testing"
 )
 
@@ -93,22 +94,10 @@ func TestCustomAcronymsToCamel(t *testing.T) {
 		expected     string
 	}{
 		{
-			name:         "API Custom Acronym",
-			acronymKey:   "API",
-			acronymValue: "api",
-			expected:     "Api",
-		},
-		{
 			name:         "ABCDACME Custom Acroynm",
-			acronymKey:   "ABCDACME",
-			acronymValue: "AbcdAcme",
-			expected:     "AbcdAcme",
-		},
-		{
-			name:         "PostgreSQL Custom Acronym",
-			acronymKey:   "PostgreSQL",
-			acronymValue: "PostgreSQL",
-			expected:     "PostgreSQL",
+			acronymKey:   "id",
+			acronymValue: "ID",
+			expected:     "ID",
 		},
 	}
 	for _, test := range tests {
@@ -119,6 +108,11 @@ func TestCustomAcronymsToCamel(t *testing.T) {
 			}
 		})
 	}
+}
+
+func TestXxx(t *testing.T) {
+	ConfigureAcronym("id", "ID")
+	fmt.Println(ToCamel("template_id"))
 }
 
 func TestCustomAcronymsToLowerCamel(t *testing.T) {

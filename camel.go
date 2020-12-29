@@ -35,14 +35,28 @@ func toCamelInitCase(s string, initCase bool) string {
 	if s == "" {
 		return s
 	}
-	if a, ok := uppercaseAcronym[s]; ok {
-		s = a
+
+	parts := strings.FieldsFunc(s, func(v rune) bool {
+		return v == '_' || v == ' ' || v == '-' || v == '.'
+	})
+
+	var result []string
+	for _, p := range parts {
+		result = append(result, oneWord(p, initCase))
+	}
+
+	return strings.Join(result, "")
+}
+
+func oneWord(p string, initCase bool) string {
+	if a, ok := uppercaseAcronym[p]; ok {
+		p = a
 	}
 
 	n := strings.Builder{}
-	n.Grow(len(s))
+	n.Grow(len(p))
 	capNext := initCase
-	for i, v := range []byte(s) {
+	for i, v := range []byte(p) {
 		vIsCap := v >= 'A' && v <= 'Z'
 		vIsLow := v >= 'a' && v <= 'z'
 		if capNext {
